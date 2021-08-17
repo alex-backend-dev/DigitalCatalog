@@ -11,7 +11,7 @@
             get { return _firstName; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value) && value.Length <= TEXT_SYMB_LIMIT)
+                if (!string.IsNullOrWhiteSpace(value) && value.Length <= TEXT_SYMB_LIMIT)
                 {
                     _firstName = value;
                 }

@@ -8,6 +8,8 @@ namespace DigitalCatalogue
     {
         public string ISBN { get; }
 
+        private const string OldValue = "-";
+
         private readonly int TEXT_LIMIT = 1000;
 
         private string _bookName;
@@ -38,9 +40,23 @@ namespace DigitalCatalogue
                 throw new ArgumentException(nameof(isbn));
             }
 
+            isbn = isbn.Replace(OldValue, "");
+
             ISBN = isbn;
             BookName = bookName;
             PublicationDate = publicationDate;
+        }
+
+        public bool Equals(Book obj)
+        {
+            if (obj == null)
+                return false;
+
+            Book book = obj as Book;
+            if (book == null)
+                return false;
+
+            return book.ISBN == this.ISBN;
         }
     }
 }

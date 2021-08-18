@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace DigitalCatalogue
+namespace DigitalCatalogue 
 {
     public class Catalog : IEnumerable
     {
@@ -50,9 +51,13 @@ namespace DigitalCatalogue
 
         public IEnumerator GetEnumerator()
         {
-            foreach (var item in _booksCatalog)
+            var sortedBooks = from book in _booksCatalog
+                              orderby book.BookName
+                              select  book;
+
+            foreach (var book in sortedBooks)
             {
-                yield return item;
+                yield return book;
             }
         }
     }

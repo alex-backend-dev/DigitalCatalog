@@ -28,7 +28,8 @@ namespace DigitalCatalogue
 
         public DateTime PublicationDate { get; }
 
-        public IList<Author> Authors { get; set; }
+        public List<Author> Authors { get; set; }
+
 
         private string regex = @"^(?: ISBN(?:-13) ?:?●)?(?=[-0-9●]{17}$|[0-9]{13}$)97[89][-●]?[0 - 9]{ 1,5}↵
                                [-●]? (?:[0 - 9] +[-●] ?){ 2}[0-9]$";
@@ -45,6 +46,18 @@ namespace DigitalCatalogue
             ISBN = isbn;
             BookName = bookName;
             PublicationDate = publicationDate;
+
+            Authors = new List<Author>();
+        }
+
+        public void AddElement(Author author)
+        {
+            if (Authors == null)
+            {
+                throw new ArgumentNullException("Ошибка! Коллекция не может быть пустой");
+            }
+
+            Authors.Add(author);
         }
 
         public bool Equals(Book obj)

@@ -60,5 +60,32 @@ namespace DigitalCatalogue
                 yield return book;
             }
         }
+
+        public IEnumerator GetBooksUsingNames(Author author)
+        {
+            var setOfBooks = from book in _booksCatalog
+                             where author.FirstName == "Александр"
+                             && author.LastName == "Ульяницкий"
+                             select book;
+
+            foreach (var book in setOfBooks)
+            {
+                yield return book;
+            }
+        }
+
+        public IEnumerator GetBooksUsingDates()
+        {
+            var setOfBooksDates = from book in _booksCatalog
+                                  orderby book.PublicationDate descending
+                                  select book;
+
+            //var setOfBooksDates = _booksCatalog.OrderByDescending(book => book.PublicationDate);
+
+            foreach (var book in setOfBooksDates)
+            {
+                yield return book;
+            }
+        }
     }
 }

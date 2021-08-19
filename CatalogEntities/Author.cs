@@ -1,6 +1,6 @@
 ﻿namespace DigitalCatalogue
 {
-    public class Author
+    public class Author 
     {
         private readonly int TEXT_SYMB_LIMIT = 200;
 

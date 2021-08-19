@@ -28,20 +28,19 @@ namespace DigitalCatalogue
 
         public DateTime PublicationDate { get; }
 
-        public List<Author> Authors { get; set; }
+        public List<Author> Authors { get; }
 
 
-        private string regex = @"^(?: ISBN(?:-13) ?:?●)?(?=[-0-9●]{17}$|[0-9]{13}$)97[89][-●]?[0 - 9]{ 1,5}↵
-                               [-●]? (?:[0 - 9] +[-●] ?){ 2}[0-9]$";
+        private string regex = @"\d{13}";
 
         public Book(string isbn, string bookName, DateTime publicationDate)
         {
+	        isbn = isbn.Replace(OldValue, "");
+
             if (!Regex.IsMatch(isbn, regex))
             {
                 throw new ArgumentException(nameof(isbn));
             }
-
-            isbn = isbn.Replace(OldValue, "");
 
             ISBN = isbn;
             BookName = bookName;
@@ -52,20 +51,16 @@ namespace DigitalCatalogue
 
         public void AddElement(Author author)
         {
-            if (Authors == null)
+            if (author == null)
             {
-                throw new ArgumentNullException("Ошибка! Коллекция не может быть пустой");
+                throw new ArgumentNullException(nameof(author));
             }
 
             Authors.Add(author);
         }
 
-        public bool Equals(Book obj)
+        public bool Equals(Book book)
         {
-            if (obj == null)
-                return false;
-
-            Book book = obj as Book;
             if (book == null)
                 return false;
 

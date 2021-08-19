@@ -14,17 +14,30 @@ namespace DigitalCatalogue
             _booksCatalog = new List<Book>();
         }
 
-        private Book Contains(string isbn)
+        private bool Contains(Book book)
         {
-            foreach (var book in _booksCatalog)
-            {
-                if (book.ISBN.Equals(isbn))
-                {
-                    return book;
-                }
-            }
+	        foreach (var bk in _booksCatalog)
+	        {
+		        if (bk.Equals(book))
+		        {
+			        return true;
+		        }
+	        }
 
-            return null;
+	        return false;
+        }
+
+        private Book GetByIsbn(string isbn)
+        {
+	        foreach (var book in _booksCatalog)
+	        {
+		        if (book.ISBN.Equals(isbn))
+		        {
+			        return book;
+		        }
+	        }
+
+	        return null;
         }
 
         private void AddBook(Book book)
@@ -34,9 +47,7 @@ namespace DigitalCatalogue
                 throw new ArgumentNullException(nameof(book));
             }
 
-            var bookExist = Contains(book.ISBN);
-
-            if (bookExist == null)
+            if (!Contains(book))
             {
                 _booksCatalog.Add(book);
             }
@@ -44,7 +55,7 @@ namespace DigitalCatalogue
 
         public Book this[string isbn]
         {
-            get => Contains(isbn);
+            get => GetByIsbn(isbn);
 
             set => AddBook(value);
         }
@@ -61,31 +72,24 @@ namespace DigitalCatalogue
             }
         }
 
-        public IEnumerator GetBooksUsingNames(Author author)
+        public Book[] GetBooksByAuthor(string firstName, string lastName)
         {
-            var setOfBooks = from book in _booksCatalog
-                             where author.FirstName == "Александр"
-                             && author.LastName == "Ульяницкий"
-                             select book;
+	        var setOfBooks = from book in _booksCatalog
+										  from athr in book.Authors
+										  where athr.FirstName.ToUpper().Equals(firstName.ToUpper())
+										        && athr.LastName.ToUpper().Equals(lastName.ToUpper())
+										  select book;
 
-            foreach (var book in setOfBooks)
-            {
-                yield return book;
-            }
+	        return setOfBooks.ToArray();
         }
 
-        public IEnumerator GetBooksUsingDates()
+        public Book[] GetBooksUsingDates()
         {
             var setOfBooksDates = from book in _booksCatalog
-                                  orderby book.PublicationDate descending
-                                  select book;
+													orderby book.PublicationDate descending
+													select book;
 
-            //var setOfBooksDates = _booksCatalog.OrderByDescending(book => book.PublicationDate);
-
-            foreach (var book in setOfBooksDates)
-            {
-                yield return book;
-            }
+            return setOfBooksDates.ToArray();
         }
     }
 }

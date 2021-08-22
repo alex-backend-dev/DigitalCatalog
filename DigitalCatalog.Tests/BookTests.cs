@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DigitalCatalog.Core.Tests
+namespace DigitalCatalog.Tests
 {
     [TestClass]
     public class BookTests

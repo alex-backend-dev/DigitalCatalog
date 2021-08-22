@@ -17,7 +17,7 @@ namespace DigitalCatalogue
         public string BookName // свойство с проверкой для ввода данных при иницаилизации поля в конструкторе
         {
             get { return _bookName; }
-            set
+            private set
             {
                 if (!string.IsNullOrWhiteSpace(value) && value.Length <= TEXT_LIMIT) // проверка на null и пустое место, кол-во символов
                 {

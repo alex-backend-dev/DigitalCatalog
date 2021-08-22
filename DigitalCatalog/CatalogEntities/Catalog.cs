@@ -67,9 +67,12 @@ namespace DigitalCatalogue
 
         public IEnumerator GetEnumerator() // реализуем интерфейс IEnumerable, метод GetEnumerator хранит ссылку на интерфейс IEnumerator 
         {
-            var sortedBooks = from book in _booksCatalog // проходимся по элементам коллекции _booksCatalog
-                              orderby book.BookName      // сортируем книги по названию (по возрастанию)                                                       
-                              select book;              // выводим книги, отсортированные по названию  
+            //var sortedBooks = from book in _booksCatalog // проходимся по элементам коллекции _booksCatalog
+            //                  orderby book.BookName      // сортируем книги по названию (по возрастанию)                                                       
+            //                  select book;              // выводим книги, отсортированные по названию  
+
+
+            var sortedBooks = _booksCatalog.OrderBy(book => book.BookName);
 
             foreach (var book in sortedBooks) // проходимся по элементам коллекции sortedBooks (sortedBooks типа IEnumerbale)
             {
@@ -79,31 +82,47 @@ namespace DigitalCatalogue
 
         public Book[] GetBooksByAuthor(string firstName, string lastName) // вовзращаем массив книг, внутри параметры имя и фамилия (вводятся)
         {
-            var setOfBooks = from book in _booksCatalog // проходимся по коллекции книг (берем все книги)
-                             from athr in book.Authors // проходимся по коллекции авторов (потом берем авторов каждой книги)
-                             where athr.FirstName.ToUpper().Equals(firstName.ToUpper()) // берем имя автора каждой книги и сравниваем с переданными параметрами в метод
-                                 && athr.LastName.ToUpper().Equals(lastName.ToUpper()) // берем фамилию автора каждой книги и сравниваем с переданными параметрами в метод
-                             select book; // получаем набор книг по заданным параметрам; приводим все к верхнему регистру и сраниваем
+            //var setOfBooks = from book in _booksCatalog // проходимся по коллекции книг (берем все книги)
+            //                 from athr in book.Authors // проходимся по коллекции авторов (потом берем авторов каждой книги)
+            //                 where athr.FirstName.ToUpper().Equals(firstName.ToUpper()) // берем имя автора каждой книги и сравниваем с переданными параметрами в метод
+            //                     && athr.LastName.ToUpper().Equals(lastName.ToUpper()) // берем фамилию автора каждой книги и сравниваем с переданными параметрами в метод
+            //                 select book; // получаем набор книг по заданным параметрам; приводим все к верхнему регистру и сраниваем
 
-            return setOfBooks.ToArray(); // приводим к массиву 
+            //return setOfBooks.ToArray(); // приводим к массиву 
+
+            var setOfBooksTwo = _booksCatalog.Where(book => book.Authors.Any(athr => athr.FirstName.ToUpper().Equals(firstName.ToUpper())
+                && athr.LastName.ToUpper().Equals(lastName.ToUpper())));
+
+            return setOfBooksTwo.ToArray();
         }
 
         public Book[] GetBooksUsingDates() // возвращает массив книг по дате публикации
         {
-            var setOfBooksDates = from book in _booksCatalog // проходимся по всем элементам _booksCatalog
-                                  orderby book.PublicationDate descending // отсортировываем набор книг по дате публикации (по убыванию descending)
-                                  select book;                            // получаем набор книг
+            //var setOfBooksDates = from book in _booksCatalog // проходимся по всем элементам _booksCatalog
+            //                      orderby book.PublicationDate descending // отсортировываем набор книг по дате публикации (по убыванию descending)
+            //                      select book;                            // получаем набор книг
 
-            return setOfBooksDates.ToArray(); // набор книг приводим к массиву
+            //return setOfBooksDates.ToArray(); // набор книг приводим к массиву
+
+            var setOfBooksDates = _booksCatalog.OrderByDescending(book => book.PublicationDate).ToArray();
+
+            return setOfBooksDates;
         }
 
         public (Author, int)[] GetBooksUsingTuples()
         {
-            var setOfBooksTuples = _booksCatalog.SelectMany(b => b.Authors) // авторы повторяются у книг, поэтому сколько раз появился автор, столько и книг
-                                                .GroupBy(i => i)
-                                                .Select(i => (i.Key, i.Count())).ToArray();
+            //var setOfBooksTuples = _booksCatalog.SelectMany(b => b.Authors) // авторы повторяются у книг, поэтому сколько раз появился автор, столько и книг
+            //                                    .GroupBy(i => i)
+            //                                    .Select(i => (i.Key, i.Count())).ToArray();
 
-            return setOfBooksTuples;
+            //return setOfBooksTuples;
+
+            var setOfBooksTuples = from book in _booksCatalog
+                                   from author in book.Authors
+                                   group author by author into athr
+                                   select(athr.Key, athr.Count());
+
+            return setOfBooksTuples.ToArray();
         }
     }
 }

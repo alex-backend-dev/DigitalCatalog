@@ -1,5 +1,6 @@
 using DigitalCatalogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace DigitalCatalog.Tests
 {
@@ -7,89 +8,53 @@ namespace DigitalCatalog.Tests
     public class AuthorTests
     {
         [TestMethod]
-        public void SetFirstName_Adding_1_SymbolString_ExpectedSetValue()
+        public void SetFirstAndLastName_Adding_199_SymbolsString_ExpectedSetValue()
         {
-            string expectedResult = "a";
+            var expectedResult = new String('a', 199);
 
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
+            Author author = new Author(expectedResult, expectedResult);
 
             Assert.AreEqual(expectedResult, author.FirstName);
+            Assert.AreEqual(expectedResult, author.LastName);
         }
 
         [TestMethod]
-        public void SetFirstName_Adding_2_SymbolsString_ExpectedSetValue()
+        public void SetFirstAndLastName_Adding_201_SymbolString_ExpectedSetValue()
         {
-            string expectedResult = "ab";
+            var expectedResult = new String('a', 201);
 
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
+            Author author = new Author(expectedResult, expectedResult);
 
             Assert.AreEqual(expectedResult, author.FirstName);
+            Assert.AreEqual(expectedResult, author.LastName);
         }
 
         [TestMethod]
-        public void SetFirstName_Adding_199_SymbolsString_ExpectedSetValue()
-        {
-            string expectedResult = 
-                "dasdaoioafsklaflka;fka;fskaskflsa;fak;fskal;fklaf;fa;s;lsasssssssssssssssssssssssssllllllllasdasdasd;dasdad;lada;dsadadlasdasd;dasdadadsadsadada;asdk;ad;ksak;dadsda;d;dasdsaddasaass";
-
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
-
-            Assert.AreEqual(expectedResult, author.FirstName);
-        }
-
-        [TestMethod]
-        public void SetFirstName_Adding_200_SymbolsString_ExpectedSetValue()
-        {
-            string expectedResult =
-                "dasdaoioafsklaflka;fka;fskaskflsa;fak;fskal;fklaf;fa;s;lsassssssdsssssssssssssssssssllllllllasdasdasd;dasdad;lada;dsadadlasdasd;dasdadadsadsadada;asdk;ad;ksak;dadsda;d;dasdsaddasaass";
-
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
-
-            Assert.AreEqual(expectedResult, author.FirstName);
-        }
-
-        [TestMethod]
-        public void SetFirstName_Adding_201_SymbolString_ExpectedSetValue()
-        {
-            string expectedResult = "dasdaoioafsklaflka;fka;fskaskflsa;fak;fskal;fklaf;fa;s;lsassssssdsssssssôssssssssssssllllllllasdasdasd;dasdad;lada;dsadadlasdasd;dasdadadsadsadada;asdk;ad;ksak;dad¸";
-
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
-
-            Assert.AreEqual(expectedResult, author.FirstName);
-        }
-
-        [TestMethod]
-        public void SetFirstName_Adding_Null_SymbolString_ExpectedSetValue()
+        public void SetFirstAndLastName_Adding_Null_SymbolString_ExpectedSetValue()
         {
             string expectedResult = null;
 
-            Author author = new Author("Alex", "Ulyanitskiy");
+            Author author = new Author(null, null);
 
-            author.FirstName = expectedResult;
+            Assert.AreEqual(expectedResult, author.FirstName);
+            Assert.AreEqual(expectedResult, author.LastName);
+        }
+
+        [TestMethod]
+        public void SetFirstAndLastName_Adding_Empty_SymbolString_ExpectedSetValue()
+        {
+            string expectedResult = String.Empty; 
+
+            Author author = new Author(expectedResult, expectedResult);
 
             Assert.AreEqual(expectedResult, author.FirstName);
         }
 
         [TestMethod]
-        public void SetFirstName_Adding_Empty_SymbolString_ExpectedSetValue()
+        [ExpectedException(typeof(ArgumentException), "Îøèáêà! Èìÿ è ôàìèëèÿ íå ìîãóò áûòü ïóñòûìè!")]
+        public void Author_Initialization_FirstName_LastName_ExpectedException()
         {
-            string expectedResult = "";
-
-            Author author = new Author("Alex", "Ulyanitskiy");
-
-            author.FirstName = expectedResult;
-
-            Assert.AreEqual(expectedResult, author.FirstName);
+            Author author = new Author(null, null);
         }
     }
 }

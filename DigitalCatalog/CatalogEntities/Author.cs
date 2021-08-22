@@ -1,4 +1,6 @@
-﻿namespace DigitalCatalogue
+﻿using System;
+
+namespace DigitalCatalogue
 {
     public class Author 
     {
@@ -9,7 +11,7 @@
         public string FirstName // вызов свойства для имени автора
         {
             get { return _firstName; } 
-            set
+            private set
             {
                 if (!string.IsNullOrWhiteSpace(value) && value.Length <= TEXT_SYMB_LIMIT) // реализации проверки на null и пустое место, лимит на ввод
                 {
@@ -23,7 +25,7 @@
         public string LastName // обращение к свойству поля
         {
             get { return _lastName; }
-            set
+            private set
             {
                 if (!string.IsNullOrWhiteSpace(value) && value.Length <= TEXT_SYMB_LIMIT) // реализации проверки на null и пустое место, лимит на ввод
                 {
@@ -34,6 +36,11 @@
 
         public Author(string firstName, string lastName) // инициализация полей в конструкторе
         {
+            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("Ошибка! Имя и фамилия не могут быть пустыми");
+            }
+
             FirstName = firstName;
             LastName = lastName;
         }

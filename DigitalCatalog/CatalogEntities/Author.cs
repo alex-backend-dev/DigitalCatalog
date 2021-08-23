@@ -17,6 +17,11 @@ namespace DigitalCatalogue
                 {
                     _firstName = value;
                 }
+
+                else
+                {
+                    throw new ArgumentException("Ошибка! Значение не может быть пустым!");
+                }
             }
         }
 
@@ -31,6 +36,11 @@ namespace DigitalCatalogue
                 {
                     _lastName = value;
                 }
+
+                else
+                {
+                    throw new ArgumentException("Ошибка! Значение не может быть пустым!");
+                }
             }
         }
 
@@ -38,7 +48,7 @@ namespace DigitalCatalogue
         {
             if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
             {
-                throw new ArgumentException("Ошибка! Имя и фамилия не могут быть пустыми");
+                throw new ArgumentException("Ошибка! Имя и фамилия автора не могут быть пустыми");
             }
 
             FirstName = firstName;

@@ -19,33 +19,30 @@ namespace DigitalCatalog.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Ошибка! Название книги не может быть более 1000 символов!")]
         public void SetFirstName_Adding_1001_SymbolsString_ExpectedSetValue()
         {
             var expectedResult = new String('a', 1001);
 
             Book book = new Book("1111111111111", expectedResult, DateTime.Now);
-
-            Assert.AreEqual(expectedResult, book.BookName);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Ошибка! Название книги не может быть пустым!")]
         public void SetFirstName_Adding_Null_SymbolString_ExpectedSetValue()
         {
             string expectedResult = null;
 
             Book book = new Book("1111111111111", expectedResult, DateTime.Now);
-
-            Assert.AreEqual(expectedResult, book.BookName);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Ошибка! Название книги не может быть пустым!")]
         public void SetFirstName_Adding_Empty_SymbolString_ExpectedSetValue()
         {
             var expectedResult = String.Empty;
 
             Book book = new Book("1111111111111", expectedResult, DateTime.Now);
-
-            Assert.AreEqual(expectedResult, book.BookName);
         }
 
         [TestMethod]

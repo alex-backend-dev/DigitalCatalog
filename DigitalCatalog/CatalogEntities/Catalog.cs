@@ -14,22 +14,11 @@ namespace DigitalCatalogue
             _booksCatalog = new List<Book>(); // инициализируем коллекцию 
         }
 
-        /// <summary>
-        /// Метод проверяет, существование книги перед добавлением в коллекцию. 
-        /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        private bool Contains(Book book) // метод возвращает true или false, принимает параметры класс Book, объект класса Book
+        public Book this[string isbn] // индексатор возвращает тип данных Book, в виде индекса принимает ISBN книги
         {
-            foreach (var bk in _booksCatalog) // проходимся по каждому элементу коллекции _booksCatalog
-            {
-                if (bk.Equals(book)) // если объект в коллекции _booksCatalog будет равен объекту переданному в параметр book, вернем true
-                {
-                    return true;
-                }
-            }
+            get => GetByIsbn(isbn); // для получения доступа к книге используем метод GetByIsbn, с помощью индекса ISBN получаем доступ 
 
-            return false; // если книги нет в каталоге, то false
+            set => AddBook(value); // с помощью метода AddBook добавляем элемент и записываем его в setter
         }
 
         private Book GetByIsbn(string isbn) // метод возвращает тип данных Book и принимает параметр isbn, по сути ISBN книги
@@ -45,24 +34,30 @@ namespace DigitalCatalogue
             return null; // если ISBN книги не совпадает друг с другом, возвращаем null значение
         }
 
-        private void AddBook(Book book) // метод ничего не возвращает, служит для добавления в метод данных
+        private void AddBook(Book book) // метод ничего не возвращает, служит для добавления в коллекцию данных
         {
             if (book is null) // если объект добавления в коллекцию пустой, выбрасываем исключение
             {
                 throw new ArgumentNullException(nameof(book));
             }
 
-            if (!Contains(book)) // если у нас false, книги нет в каталоге, то вернем false
+            if (!Contains(book)) // если у нас false, книги нет в каталоге
             {
                 _booksCatalog.Add(book); // если условие соблюдается, добавляем книгу в коллекцию
             }
         }
 
-        public Book this[string isbn] // индексатор возвращает тип данных Book, в виде индекса принимает ISBN книги
+        private bool Contains(Book book) // метод возвращает true или false, принимает параметры класс Book, объект класса Book
         {
-            get => GetByIsbn(isbn); // для получения доступа к книге используем метод GetByIsbn, с помощью индекса ISBN получаем доступ 
+            foreach (var bk in _booksCatalog) // проходимся по каждому элементу коллекции _booksCatalog
+            {
+                if (bk.Equals(book)) // если объект в коллекции _booksCatalog будет равен объекту переданному в параметр book, вернем true
+                {
+                    return true;
+                }
+            }
 
-            set => AddBook(value); // с помощью метода AddBook добавляем элемент и записываем его в setter
+            return false; // если книги нет в каталоге, то false
         }
 
         public IEnumerator GetEnumerator() // реализуем интерфейс IEnumerable, метод GetEnumerator хранит ссылку на интерфейс IEnumerator 

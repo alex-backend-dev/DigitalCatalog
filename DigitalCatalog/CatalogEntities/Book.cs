@@ -23,6 +23,11 @@ namespace DigitalCatalogue
                 {
                     _bookName = value;
                 }
+
+                else
+                {
+                    throw new ArgumentException("Ошибка! Значение не может быть пустым!");
+                }
             }
         }
 

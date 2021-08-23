@@ -23,7 +23,6 @@ namespace DigitalCatalog.Tests
             var firstBook = books.FirstOrDefault(); // возвращаем 1 ую книгу коллекции, если он существует, иначе null
             var secondBook = books.LastOrDefault(); // возвращаем последнюю книгу коллекции, если она существует, иначе null
 
-
             Assert.IsNotNull(firstBook); // проверяем, что полученная 1 ая книга имеет не пустое значение
             Assert.AreEqual(firstBook, book1); // сравниваем 1 ую книгу и 1 ый объект с ISBN
 

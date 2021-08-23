@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DigitalCatalog.Tests
 {
-	public static class Helper
+	public static class Helper // метод расширения для получения определенного элемента из коллекции
 	{
 		public static IEnumerable<Book> GetElements(this IEnumerable source)
 		{

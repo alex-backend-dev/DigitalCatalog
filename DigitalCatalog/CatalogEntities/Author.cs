@@ -36,7 +36,7 @@ namespace DigitalCatalogue
 
         public Author(string firstName, string lastName) // инициализация полей в конструкторе
         {
-            if (string.IsNullOrEmpty(firstName) && string.IsNullOrEmpty(lastName))
+            if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
             {
                 throw new ArgumentException("Ошибка! Имя и фамилия не могут быть пустыми");
             }

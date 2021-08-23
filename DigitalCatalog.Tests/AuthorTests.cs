@@ -52,9 +52,16 @@ namespace DigitalCatalog.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Ошибка! Имя и фамилия не могут быть пустыми!")]
-        public void Author_Initialization_FirstName_LastName_ExpectedException()
+        public void Author_Initialization_Null_FirstName_LastName_ExpectedException()
         {
             Author author = new Author(null, null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Ошибка! Имя и фамилия не могут быть пустыми!")]
+        public void Author_Initialization_StringEmpty_FirstName_LastName_ExpectedException()
+        {
+            Author author = new Author(String.Empty, String.Empty);
         }
     }
 }
